@@ -12,6 +12,7 @@ export default function Background() {
   strokeDasharray={"4 2"}
   className={cn(
 "[mask-image:radial-gradient(400px_circle_at_center,red,transparent)]",
+"absolute inset-0 z-0"
   )}
   />
 }

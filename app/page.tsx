@@ -2,6 +2,9 @@ import Button from "@/app/ui/button";
 import { Emphasis } from "@/app/ui/emphasis";
 import { Header } from "@/app/ui/header";
 import Background from '@/app/ui/background';
+import Image from 'next/image';
+
+import { HomeIcon, PaintBrushIcon, BookOpenIcon, UserCircleIcon } from '@heroicons/react/16/solid';
 
 export default function Home() {
   return (
@@ -12,31 +15,70 @@ export default function Home() {
         <div className="flex-col w-full gap-6 p-10">
           <div className="flex rounded-xl flex flex-col">
             <div className="h-16 p-3 border rounded-md flex flex-row items-center justify-between gap-6 p-2">
-              <h1 className="text-transparent mt-1 bg-clip-text bg-gradient-to-r from-zinc-50 to-zinc-400 font-semibold leading-10 tracking-tight dark:text-zinc-350">
+              <div className="flex flex-row gap-2 text-transparent w-65 mt-1 bg-clip-text bg-gradient-to-r from-zinc-50 to-zinc-400 font-semibold leading-10 whitespace-nowrap tracking-tight dark:text-zinc-350">
+              <div className="top-0.5">
               <Header title="spirit-wolf.net"/>
-              </h1>
+              </div>
+              </div>
 
               <div className="flex gap-4">
-                <Button href="/home"> Home </Button>
-                <Button href="/projects"> Projects </Button>
-                <Button href="/blog"> Blog </Button>
-                <Button href="/login"> Login </Button>
+                <Button href="/">
+                  <HomeIcon className="h-5 w-5"/>
+                  <span> Home </span>
+                </Button>
+                <Button href="/projects">
+                  <PaintBrushIcon className="w-5 h-5"/>
+                  <span>Projects</span>
+                </Button>
+                <Button href="/blog">
+                  <BookOpenIcon className="w-5 h-5"/>
+                  <span> Blog </span>
+                </Button>
+                <Button href="/login">
+                  <UserCircleIcon className="w-5 h-5"/>
+                  <span> Login </span>
+                </Button>
               </div>
             </div>
           </div>
 
-          <div className="h-[400px] flex flex-col items-center justify-center">
+          <div className="h-[650px] flex gap-1 flex-col items-center justify-center">
           
+              <Image className="z-10 w-50 h-50" src="/icon.png" height="960" width="960" alt="Logo"/>
             <div className="flex justify-center text-center w-full">
             <p className="text-4xl font-medium">
             Hi! My name is <span className="font-extrabold underline decoration-sky-500/100"> Ameer Ali. </span>
             </p>
             </div>
 
-            <p className="justify text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            <p className="justify text-lg leading-8 text-zinc-400">
             I'm a <Emphasis>game developer, composer,</Emphasis> and <Emphasis>web developer</Emphasis> from Trinidad and Tobago.
             </p>
 
+          </div>
+
+          <div className="text-justify flex flex-col gap-6 shadow-xl text-lg text-zinc-400">
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+          <p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus erat orci, eleifend a fermentum nec, posuere sit amet velit. Aenean a congue leo. Vivamus gravida erat metus, ac lobortis arcu feugiat ac. Cras quam lacus, dignissim vel porttitor ac, tempor eu ipsum. Suspendisse varius elementum enim in tempor. Donec sollicitudin mattis pharetra. Ut lacinia quis libero at tincidunt. Donec eu lorem semper, vehicula sapien vitae, tempor nunc. Donec consequat mi feugiat faucibus ornare. Praesent convallis lorem et tincidunt interdum. Sed iaculis eros vel gravida dapibus. Suspendisse vel felis quis neque bibendum volutpat sit amet eget tellus. Vivamus ut diam non purus pharetra sagittis eu ac lectus. Pellentesque mattis massa a purus porttitor porttitor. Integer eu mi aliquet, varius ex quis, suscipit lectus.
+  </p>
+
+<p>
+Vivamus non porttitor nisl, vel finibus turpis. Sed blandit tortor nisl, maximus ultricies massa ultrices sit amet. Praesent euismod risus lacus. Suspendisse vestibulum volutpat purus, id ultrices dolor elementum quis. Integer lobortis ullamcorper libero, vitae volutpat purus pulvinar ac. Nam mattis, odio ac pulvinar iaculis, odio enim ultrices purus, in auctor neque tellus et elit. Phasellus condimentum in massa id consectetur. Pellentesque ut erat tortor. Nullam pellentesque sem sem, eget suscipit dolor fringilla eget. Nam ac ultrices elit, dictum scelerisque felis. Duis mattis nisi sit amet magna commodo, eget convallis sem sollicitudin. Nunc ut cursus erat. Nam cursus lacus eu mauris ornare porta. Praesent non finibus purus, in feugiat est. Integer a hendrerit odio. Aliquam sodales enim metus, quis elementum neque efficitur eget.
+</p>
+
+<p>
+Donec egestas pretium ligula bibendum sodales. Curabitur tincidunt imperdiet facilisis. In laoreet risus a nisi auctor semper. Vestibulum laoreet orci aliquet molestie eleifend. Proin a suscipit augue. Ut imperdiet nibh a nulla finibus, quis luctus tortor malesuada. Sed eget euismod massa. Phasellus placerat odio ut lacus fermentum, malesuada pellentesque est consectetur. Pellentesque sollicitudin semper enim, ac pulvinar urna dictum quis. Quisque eros libero, vestibulum vel viverra et, dapibus eu mauris. Sed hendrerit quam nec porttitor porta. Suspendisse nec porttitor tortor.
+</p>
+
+<p>
+Donec ultricies enim non felis pharetra condimentum. Fusce et laoreet orci, eu feugiat sem. Donec varius eget eros eu cursus. Vestibulum vel porta turpis. Etiam eget urna tincidunt, malesuada ipsum sed, lobortis lorem. Maecenas id massa odio. Aenean laoreet, turpis ac feugiat egestas, metus mauris feugiat nunc, ut condimentum urna dui sed elit. In hac habitasse platea dictumst. Nunc hendrerit lacus at ex pellentesque faucibus.
+  </p>
+
+<p>
+Etiam aliquet scelerisque volutpat. Pellentesque eros ipsum, placerat ac pretium at, rhoncus a tellus. In ut felis id est porta consectetur. Proin tincidunt tellus nisi, at tempus quam aliquam sed. Phasellus pulvinar et libero sed porttitor. Curabitur maximus augue vitae felis tempus mattis. Duis eget quam ante. 
+  </p>
           </div>
         </div>
       </main>

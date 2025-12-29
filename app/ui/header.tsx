@@ -10,7 +10,7 @@ export function Header({title}: HeaderProps) {
   return <TypeAnimation
   sequence={[
     title,
-    1000,
+    500,
   ]}
   wrapper="span"
   speed={40}

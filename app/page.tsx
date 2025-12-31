@@ -1,10 +1,7 @@
-import Button from "@/app/ui/button";
 import { Emphasis } from "@/app/ui/emphasis";
-import { Header } from "@/app/ui/header";
-import Background from '@/app/ui/background';
+import { GridBackground } from '@/app/ui/background';
 import Image from 'next/image';
-
-import { HomeIcon, PaintBrushIcon, BookOpenIcon, UserCircleIcon } from '@heroicons/react/16/solid';
+import { Navigation } from '@/app/ui/nav';
 
 interface CardProps {
   image?: string,
@@ -58,37 +55,6 @@ function Projects() {
   );
 }
 
-function Navigation() {
-  return <div className="fixed w-[900px] bg-black/75 z-15 backdrop-blur-md shadow-lg shadow-black flex rounded-xl flex flex-col">
-    <div className="h-16 p-3 border rounded-md flex flex-row items-center justify-between gap-6 p-2">
-      <div className="flex flex-row gap-2 text-transparent w-65 mt-1 bg-clip-text bg-gradient-to-r from-zinc-50 to-zinc-400 font-semibold leading-10 whitespace-nowrap tracking-tight dark:text-zinc-350">
-        <div className="top-0.5">
-          <Header title="spirit-wolf.net" />
-        </div>
-      </div>
-
-      <div className="flex gap-4">
-        <Button href="/">
-          <HomeIcon className="h-5 w-5" />
-          <span> Home </span>
-        </Button>
-        <Button href="/#projects">
-          <PaintBrushIcon className="w-5 h-5" />
-          <span>Projects</span>
-        </Button>
-        <Button href="/blog">
-          <BookOpenIcon className="w-5 h-5" />
-          <span> Blog </span>
-        </Button>
-        <Button href="/login">
-          <UserCircleIcon className="w-5 h-5" />
-          <span> Login </span>
-        </Button>
-      </div>
-    </div>
-  </div>
-}
-
 function ProjectCard(props: CardProps) {
   return <div className="flex flex-col border rounded-xl bg-black w-[450px] p-8 gap-3">
     {props.image &&
@@ -107,10 +73,10 @@ export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center font-sans">
       <main className="flex min-h-screen w-[1100px] flex-col justify-between px-13 sm:items-start">
-        <Background />
+        <GridBackground />
 
         <div className="flex-col w-full gap-6 p-10">
-          <Navigation />
+          <Navigation homeIcon={true} projectIcon={true} blogIcon={true} loginIcon={true} />
 
           <div className="h-[650px] flex gap-1 flex-col items-center justify-center">
 

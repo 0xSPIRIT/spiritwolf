@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import { GridPattern } from '@/components/ui/grid-pattern';
 
-export default function Background() {
+export function GridBackground() {
   return <GridPattern
   width={40}
   height={40}

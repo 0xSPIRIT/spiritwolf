@@ -7,7 +7,7 @@ import { login } from '@/app/lib/actions';
 
 import { useActionState } from 'react';
 
-const initialLoginState = { error: null, success: false };
+const initialLoginState = { error: null };
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(login, initialLoginState);

@@ -1,41 +1,32 @@
 'use server';
 
 import { neon } from '@neondatabase/serverless';
-import { hashStringSHA256 } from '@/app/lib/util';
 
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-
 import { cookies } from 'next/headers';
+
 import { randomUUID } from 'crypto';
 import bcrypt from 'bcryptjs';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
-type User = {
-  username: string;
-  email: string;
-  hashed_password: string;
-};
+export async function register(prevState, formData: FormData) {
+  const username = formData.get('username') as string;
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
 
-export async function addEmail(formData: FormData) {
+  if (!email) return { error: "Please enter an email!" };
+  if (!password) return { error: "Please enter a password!" };
+
+  const hashedPassword = await bcrypt.hash(password.toString(), 10);
+
   try {
-    const username = formData.get('username');
-    const email = formData.get('email');
-    const password = formData.get('password');
-
-    if (!password) {
-      throw new Error("Password must be non null");
-    }
-
-    const hashedPassword = await hashStringSHA256(password.toString());
-
     await sql`INSERT INTO users (username, email, hashed_password) VALUES (${username}, ${email}, ${hashedPassword})`;
-
-    redirect('/');
   } catch (err) {
-    console.error(err);
+    return { error: err.toString() };
   }
+
+  redirect('/login');
 }
 
 async function findUser(email: string) {
@@ -47,30 +38,83 @@ async function findUser(email: string) {
     return null;
   }
 }
-/*
-export async function login(formData: FormData) {
+
+export async function login(prevState, formData: FormData) {
+  // First we cleanup any expired sessions.
+
+  await sql`
+    DELETE FROM sessions
+    WHERE expires_at < NOW()
+  `;
+
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const user = await findUser(email);
-  if (!user) return { error: "Invalid credentials" };
+  if (!email) return { error: "Please enter an email", success: false };
+  if (!password) return { error: "Please enter a password", success: false };
 
-  const valid = await bcrypt.compare(password, user.passwordHash);
-  if (!valid) return { error: "Invalid password" };
+  const user = await findUser(email);
+  if (!user) return { error: "Invalid credentials", success: false };
+
+  const valid = await bcrypt.compare(password, user.hashed_password);
+
+  if (!valid) return { error: "Invalid password", success: false };
 
   const sessionId = randomUUID();
 
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 15); // 15 minutes
 
   await sql`
-    INSERT INTO sessions (id, username, expires_at) VALUES (${sessionId}, S{user.username}, ${expiresAt})
+    INSERT INTO sessions (id, username, expires_at)
+    VALUES (${sessionId}, ${user.username}, ${expiresAt})
   `;
 
-  cookies().set('session', sessionId, {
+  const cookieStore = await cookies();
+
+  cookieStore.set('session', sessionId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    path: '/'
+    expires: expiresAt,
+    path: '/',
   });
+
+  redirect('/');
 }
-*/
+
+export async function logout() {
+  const cookieStore = await cookies();
+  const cookieSessionId = cookieStore.get('session')?.value;
+
+  if (cookieSessionId) {
+    const sessionId = cookieSessionId.replace(/^"|"$/g, '');
+    await sql`DELETE FROM sessions WHERE id = ${sessionId}`;
+  }
+
+  cookieStore.delete('session');
+
+  redirect('/');
+}
+
+export async function getCurrentUser() {
+  const cookieStore = await cookies();
+  let sessionId = cookieStore.get('session')?.value;
+
+  if (!sessionId) return null;
+
+  // sessionId has extra quotes, so we have to remove that.
+  sessionId = sessionId.replace(/^"|"$/g, '');
+
+  const session = await sql`
+    SELECT username, expires_at
+    FROM sessions
+    WHERE id = ${sessionId}
+  `;
+
+  if (session.length === 0) {
+    console.log(`Error: no session found for id ${sessionId}`);
+    return null;
+  }
+
+  return session[0]?.username ?? null;
+}

@@ -1,1 +1,1 @@
-- Let the header float above the page while scrolling.
+[x] Let the header float above the page while scrolling.

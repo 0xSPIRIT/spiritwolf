@@ -9,9 +9,9 @@ interface HeaderProps {
 
 export function Header({ title, staticText }: HeaderProps) {
   if (staticText) {
-    return <span className="text-[2em] inline-block"> {title} </span>;
+    return <a href='/'> <span className="text-[2em] inline-block"> {title} </span> </a>;
   } else {
-    return <TypeAnimation
+    return <a href='/'> <TypeAnimation
       sequence={[
         title,
         500,
@@ -20,6 +20,6 @@ export function Header({ title, staticText }: HeaderProps) {
       speed={40}
       style={{ fontSize: '2em', display: 'inline-block' }}
       repeat={0}
-    />
+    /> </a>
   }
 }

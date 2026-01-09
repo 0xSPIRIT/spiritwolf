@@ -3,6 +3,8 @@ import { GridBackground } from '@/app/ui/background';
 import Image from 'next/image';
 import { Navigation } from '@/app/ui/nav';
 
+import User from '@/app/ui/user';
+
 interface CardProps {
   image?: string,
   title: string,
@@ -80,6 +82,7 @@ export default function Home() {
 
           <div className="h-[650px] flex gap-1 flex-col items-center justify-center">
 
+            <User />
             <Image className="z-10 w-50 h-50" src="/icon.png" height="960" width="960" alt="Logo" />
             <div className="flex justify-center text-center w-full">
               <p className="text-4xl font-medium">

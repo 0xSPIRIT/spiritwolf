@@ -1,18 +1,25 @@
+'use client';
+
 import Input from '@/app/ui/input';
 
-import { addEmail } from '@/app/lib/actions';
+import { register } from '@/app/lib/actions';
+import { useActionState } from 'react';
+
+const initialState = { error: null };
 
 export default function RegisterForm() {
+  const [state, formAction, isPending] = useActionState(register, initialState);
+
   return (
-    <form action={addEmail} className="z-1 bg-black/50 outline shadow-xl shadow-black rounded-xl p-6">
-      <div className="flex flex-col gap-6">
+    <form action={formAction} className="z-1 bg-black/50 w-[400px] outline shadow-xl shadow-black rounded-xl p-6">
+      <div className="flex flex-col gap-6 w-full">
         <div className="w-full flex justify-center">
           <h1 className="text-3xl font-bold"> Register </h1>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 w-full">
 
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <div>
               <Input type="email" />
             </div>
@@ -36,6 +43,7 @@ export default function RegisterForm() {
             type="submit">
             Create Account
           </button>
+          {state.error && <p className="font-semibold max-w-md"> { state.error } </p> }
         </div>
       </div>
     </form>

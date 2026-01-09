@@ -1,7 +1,9 @@
 import { Header } from "@/app/ui/header";
 import Button from "@/app/ui/button";
 
-import { HomeIcon, PaintBrushIcon, BookOpenIcon, UserCircleIcon } from '@heroicons/react/16/solid';
+import { HomeIcon, PaintBrushIcon, BookOpenIcon } from '@heroicons/react/16/solid';
+
+import AccountIcon from '@/app/ui/account-icon';
 
 interface NavigationProps {
   staticText?: boolean,
@@ -37,11 +39,7 @@ export function Navigation(props: NavigationProps) {
             <BookOpenIcon className="w-5 h-5" />
             <span> Blog </span>
           </Button>}
-          {props.loginIcon && <Button href="/login">
-            <UserCircleIcon className="w-5 h-5" />
-            <span> Login </span>
-          </Button>
-          }
+          {props.loginIcon && <AccountIcon />}
         </div>
       }
     </div>

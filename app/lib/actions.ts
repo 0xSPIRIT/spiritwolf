@@ -10,7 +10,7 @@ import bcrypt from 'bcryptjs';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
-export async function register(prevState: { err: string }, formData: FormData) {
+export async function register(prevState: { error: string }, formData: FormData) {
   const username = formData.get('username') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -23,7 +23,7 @@ export async function register(prevState: { err: string }, formData: FormData) {
   try {
     await sql`INSERT INTO users (username, email, hashed_password) VALUES (${username}, ${email}, ${hashedPassword})`;
   } catch (err) {
-    return { error: err.toString() };
+    return { error: (err as Error).toString() };
   }
 
   redirect('/login');
@@ -39,7 +39,7 @@ async function findUser(email: string) {
   }
 }
 
-export async function login(prevState: { err: string }, formData: FormData) {
+export async function login(prevState: { error: string }, formData: FormData) {
   // First we cleanup any expired sessions.
 
   await sql`

@@ -5,7 +5,7 @@ import Input from '@/app/ui/input';
 import { register } from '@/app/lib/actions';
 import { useActionState } from 'react';
 
-const initialState = { error: null };
+const initialState = { error: "" };
 
 export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(register, initialState);

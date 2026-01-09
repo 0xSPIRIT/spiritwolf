@@ -10,7 +10,7 @@ import bcrypt from 'bcryptjs';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
-export async function register(prevState, formData: FormData) {
+export async function register(prevState: { err: string }, formData: FormData) {
   const username = formData.get('username') as string;
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -39,7 +39,7 @@ async function findUser(email: string) {
   }
 }
 
-export async function login(prevState, formData: FormData) {
+export async function login(prevState: { err: string }, formData: FormData) {
   // First we cleanup any expired sessions.
 
   await sql`
@@ -50,15 +50,15 @@ export async function login(prevState, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!email) return { error: "Please enter an email", success: false };
-  if (!password) return { error: "Please enter a password", success: false };
+  if (!email) return { error: "Please enter an email" };
+  if (!password) return { error: "Please enter a password" };
 
   const user = await findUser(email);
-  if (!user) return { error: "Invalid credentials", success: false };
+  if (!user) return { error: "Invalid credentials" };
 
   const valid = await bcrypt.compare(password, user.hashed_password);
 
-  if (!valid) return { error: "Invalid password", success: false };
+  if (!valid) return { error: "Invalid password" };
 
   const sessionId = randomUUID();
 

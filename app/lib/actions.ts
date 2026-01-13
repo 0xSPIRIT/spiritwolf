@@ -1,14 +1,12 @@
 'use server';
 
-import { neon } from '@neondatabase/serverless';
-
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
 import { randomUUID } from 'crypto';
 import bcrypt from 'bcryptjs';
 
-const sql = neon(`${process.env.DATABASE_URL}`);
+import { sql } from '@/app/lib/db';
 
 export async function register(prevState: { error: string }, formData: FormData) {
   const username = formData.get('username') as string;
@@ -40,8 +38,7 @@ async function findUser(email: string) {
 }
 
 export async function login(prevState: { error: string }, formData: FormData) {
-  // First we cleanup any expired sessions.
-
+  // Cleanup any expired sessions
   await sql`
     DELETE FROM sessions
     WHERE expires_at < NOW()
@@ -62,7 +59,7 @@ export async function login(prevState: { error: string }, formData: FormData) {
 
   const sessionId = randomUUID();
 
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 15); // 15 minutes
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24); // 1 day
 
   await sql`
     INSERT INTO sessions (id, username, expires_at)

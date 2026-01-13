@@ -1,7 +1,9 @@
 import { Emphasis } from "@/app/ui/emphasis";
 import { GridBackground } from '@/app/ui/background';
-import Image from 'next/image';
 import { Navigation } from '@/app/ui/nav';
+
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface CardProps {
   image?: string,
@@ -11,7 +13,7 @@ interface CardProps {
 
 function PageHeading(props: { title: string }) {
   return (
-    <div className="flex flex-row gap-2 text-transparent w-65 mt-1 bg-clip-text bg-gradient-to-r from-zinc-50 to-zinc-400 font-semibold leading-10 whitespace-nowrap tracking-tight dark:text-zinc-350 text-3xl">
+    <div className="flex flex-row gap-2 text-transparent w-65 mt-1 underline decoration-sky-500 bg-clip-text bg-gradient-to-r from-zinc-50 to-zinc-400 font-extrabold leading-10 whitespace-nowrap tracking-tight dark:text-zinc-350 text-3xl">
       <h1> {props.title} </h1>
     </div>
   );
@@ -36,6 +38,19 @@ function AboutMe() {
   </div>;
 }
 
+function WebGames() {
+  return (
+    <div className="flex flex-col gap-6">
+      <PageHeading title="Web Games" />
+
+      <div className="text-justify flex flex-col gap-6 shadow-xl text-lg text-zinc-400">
+        <p> Here's the test </p>
+        <Link href="/games/lies" className="text-white underline decoration-sky-800"> First </Link>
+      </div>
+    </div>
+  );
+}
+
 function Projects() {
   const projects = [
     { image: '/projects/veil.png', title: 'Veil: Mirages', caption: 'A dreamlike psychological thriller released on Steam, programmed from scratch in C++, modeled in Blender, and composed in FL Studio by me.' },
@@ -46,17 +61,18 @@ function Projects() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeading title="Projects" />
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3">
         {projects.map((p, i) => (
           <ProjectCard key={i} image={p.image} title={p.title} caption={p.caption} />
         ))}
       </div>
+      <WebGames />
     </div>
   );
 }
 
 function ProjectCard(props: CardProps) {
-  return <div className="flex flex-col border rounded-xl bg-black w-[450px] p-8 gap-3">
+  return <div className="flex flex-col border rounded-xl bg-black w-[300px] p-8 gap-3">
     {props.image &&
       <div className="outline border rounded-xl">
         <Image src={props.image} width={400} height={300} alt={props.caption || ''} />
@@ -75,7 +91,7 @@ export default function Home() {
       <main className="flex min-h-screen w-[1100px] flex-col justify-between px-13 sm:items-start">
         <GridBackground />
 
-        <div className="flex-col w-full gap-6 p-10">
+        <div className="flex flex-col w-full gap-6 p-10">
           <Navigation homeIcon={true} projectIcon={true} blogIcon={true} loginIcon={true} />
 
           <div className="h-[650px] flex gap-1 flex-col items-center justify-center">
@@ -83,7 +99,7 @@ export default function Home() {
             <Image className="z-10 w-50 h-50" src="/icon.png" height="960" width="960" alt="Logo" />
             <div className="flex justify-center text-center w-full">
               <p className="text-4xl font-medium">
-                Hi! My name is <span className="font-extrabold underline decoration-sky-500/100"> Ameer Ali. </span>
+                Hi! My name is <span className="font-extrabold underline decoration-sky-500"> Ameer Ali. </span>
               </p>
             </div>
 

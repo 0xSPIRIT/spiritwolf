@@ -76,6 +76,14 @@ export async function login(prevState: { error: string }, formData: FormData) {
     path: '/',
   });
 
+  cookieStore.set('username', user.username, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    expires: expiresAt,
+    path: '/',
+  });
+
   redirect('/');
 }
 

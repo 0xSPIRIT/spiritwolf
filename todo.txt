@@ -1,2 +1,7 @@
+Room system:
+  [ ] If the connection with pusher to a client is dropped,
+      remove them from the current room.
+
+
 [ ] Add a social game that uses the account system.
 [ ] Add blog
